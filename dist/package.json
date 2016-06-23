@@ -1,0 +1,25 @@
+{
+  "name": "bfast",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dalanmiller/bfast.git"
+  },
+  "keywords": [
+    "horizon",
+    "rethinkdb",
+    "bfast",
+    "quiz"
+  ],
+  "author": "dalan.miller@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dalanmiller/bfast/issues"
+  },
+  "homepage": "https://github.com/dalanmiller/bfast#readme"
+}

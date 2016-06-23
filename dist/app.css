@@ -1,0 +1,74 @@
+#madeBy {
+  margin-top:50px;
+}
+
+#brand {
+  font-family: "Sansita One", cursive;
+}
+
+#dashboard {
+  margin-top:100px;
+}
+
+/* FFE7B5 */
+body {
+  background-color: #FFE7B5;
+}
+
+#contestant {
+  margin-top:100px;
+}
+
+#contestant #question {
+  margin-top:10px;
+  margin-bototm:10px;
+  font-family: "Sansita One", cursive;
+}
+
+#contestant #answer {
+  margin-top:50px;
+  font-size:20px;
+}
+
+#contestant #player-table{
+  margin-top:25px;
+}
+
+input[type=text] {
+  background-color: #FFE7B5;
+  height:17px;
+  border: 0;
+  margin-left:1px;
+  text-align:center;
+  width:80%;
+  box-shadow: -8px 10px 0px -7px #EC0868, 8px 10px 0px -7px #EC0868;
+  -webkit-transition: box-shadow 0.3s;
+  transition: box-shadow 0.3s;
+}
+input[type=text]:focus {
+  outline: none;
+  box-shadow: -8px 10px 0px -7px #4EA6EA, 8px 10px 0px -7px #4EA6EA;
+}
+
+#answer p{
+  visibility: hidden;
+}
+
+#answer:hover p{
+  visibility: visible;
+}
+
+.btn-bfast {
+  color: #fff;
+  background-color: #8100A8;
+  border-color: #FC8653;
+}
+
+/* FFDDA1 */
+a {
+  color: #EC0868;
+}
+
+#intro-hero > img {
+  width: 75%;
+}
