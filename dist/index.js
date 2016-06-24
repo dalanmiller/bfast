@@ -7,7 +7,6 @@ const horizon = Horizon({
     authType: 'anonymous'
 })
 const games = horizon('games')
-const players = horizon('players')
 const users = horizon('users')
 
 const Home = Vue.extend({
@@ -90,7 +89,6 @@ const Dashboard = Vue.extend({
             console.log("whoops")
         }
 
-
         // Monitor players for all players in this game
         this.playerSubscription = users.findAll({
             'game_id': this.$route.params.game_id
@@ -130,24 +128,29 @@ const Dashboard = Vue.extend({
     },
     methods: {
         nextQuestion() {
+            console.log(this.questions)
+            // Make sure I have questions to give
             if (this.questions.length > 0) {
+
+                // Pop question off the front
                 this.current_question = this.questions.shift()
-                    // Set the current_question to the new one
+
+                // Set the current_question to the new one
                 games.find(this.$route.params.game_id).fetch().subscribe((result) => {
-                        console.log(result)
-                        result.current_question = this.current_question
-                        games.replace(result)
-                    })
-                    // Unanswer all players
-                users.findAll({
-                    game_id: this.$route.params.game_id
-                }).fetch().subscribe((result) => {
+                    result.current_question = this.current_question
+                    games.replace(result)
+                })
+
+                // Unanswer all players
+                users.findAll({ game_id: this.$route.params.game_id }).fetch().subscribe((result) => {
                     for (let i = 0; i < result.length; i++) {
                         result[i].answered = 'notyet'
                     }
                     console.log(result)
                     users.replace(result)
                 })
+            } else {
+              alert("Out of questions!")
             }
         },
         newGame() {
@@ -170,6 +173,7 @@ const Dashboard = Vue.extend({
             }).fetch().subscribe((result) => {
                 result.forEach((player) => {
                     player.game_id = new_game_name
+                    player.score = 0
                 })
                 users.replace(result)
             })
@@ -232,6 +236,9 @@ const Contestant = Vue.extend({
             if (result) {
                 this.current_question = result.current_question
                 this.inputSwitcher(false)
+                document.querySelector("#answer").classList.remove("text-success")
+                document.querySelector("#answer").classList.remove("text-danger")
+                document.querySelector("#answer input").value = ''
             } else {
                 console.log("Result was null")
             }
@@ -291,6 +298,7 @@ const Contestant = Vue.extend({
         isRight(event) {
             if (this.current_question.answer.toLowerCase() == event.target.value.toLowerCase()) {
                 console.log("RIGHT")
+
                 users.find(this.id).fetch().subscribe((player) => {
                     // Increment their score
                     player.score += this.current_question.value
@@ -298,22 +306,25 @@ const Contestant = Vue.extend({
                     player.answered = 'right'
                     users.replace(player)
                 })
+                // this.notifyCorrect()
+                document.querySelector("#answer").classList.toggle("text-success")
 
-                this.inputSwitcher(true)
-                    // this.updateScore()
-                    // this.notifyCorrect()
             } else {
                 console.log("WRONG")
 
                 users.find(this.id).fetch().subscribe((player) => {
-                        // Set their answer to false
-                        player.answered = 'wrong'
-                        users.replace(player)
-                    })
-                    // this.notifyWrong()
-                this.inputSwitcher(true)
+                    // Set their answer to false
+                    player.answered = 'wrong'
+                    users.replace(player)
+                })
+
+                document.querySelector("#answer").classList.toggle("text-danger")
+                // this.notifyWrong()
+
             }
-            // this.disableInput()
+            // event.target.value = ''
+            this.inputSwitcher(true)
+
         },
         saveName(event) {
             console.log(event.target.value)
