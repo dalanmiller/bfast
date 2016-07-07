@@ -80,14 +80,14 @@ const Dashboard = Vue.extend({
             playerSubscription: null,
         }
     },
-    created() {
+    ready() {
         // Hack
-        try {
-            const hero = document.querySelector("#intro-hero")
-            hero.parentElement.removeChild(hero)
-        } catch (e) {
-            console.log("whoops")
-        }
+        // try {
+        //     const hero = document.querySelector("#intro-hero")
+        //     hero.parentElement.removeChild(hero)
+        // } catch (e) {
+        //     console.log("whoops")
+        // }
 
         // Monitor players for all players in this game
         this.playerSubscription = users.findAll({
@@ -224,12 +224,12 @@ const Contestant = Vue.extend({
             players: [],
         }
     },
-    created() {
+    ready() {
         // Hack
-        try {
-            const hero = document.querySelector("#intro-hero")
-            hero.parentElement.removeChild(hero)
-        } catch (e) {}
+        // try {
+        //     const hero = document.querySelector("#intro-hero")
+        //     hero.parentElement.removeChild(hero)
+        // } catch (e) {}
 
         // When new question is added update question text and allow new input
         this.q_sub = games.find(this.$route.params.game_id).watch().subscribe((result) => {
