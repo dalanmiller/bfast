@@ -1,14 +1,20 @@
-rethinkdb:
-  image: rethinkdb:latest
-  ports:
-    - "28015:28015"
-    - "8080:8080"
-horizon:
-  image: dalanmiller/horizon
-  command: su -s /bin/sh horizon -c "hz serve --allow-anonymous yes --debug --secure no --connect rethinkdb:28015 --bind all /usr/app"
-  volumes:
-    - ./:/usr/app
-  links:
-    - rethinkdb
-  ports:
-    - "8181:8181"
+version: '2'
+services:
+  rethinkdb:
+    image: rethinkdb:latest
+    ports:
+      - "28015"
+      - "8080:8182"
+    restart: always
+  horizon:
+    image: rethinkdb/horizon
+    restart: always
+    command: su -s /bin/sh horizon -c "hz serve --dev --allow-anonymous yes --debug --secure yes --cert-file /usr/app/horizon-cert.pem --key-file /usr/app/horizon-key.pem --connect rethinkdb:28015 --bind all /usr/app"
+    volumes:
+      - ./:/usr/app
+    links:
+      - rethinkdb
+    ports:
+      - "8181:8181"
+    # depends_on:
+    #   - rethinkdb
