@@ -97,23 +97,24 @@ const Dashboard = Vue.extend({
         })
 
         //Grab food questions
-        fetch(food_questions_url).then((response) => {
-            return response.json()
-        }).then((json) => {
+          fetch(food_questions_url).then((response) => {
+              return response.json()
+          }).then((json) => {
 
-            // Some of the questions have no questions (because parsing?)
-            const filtered_questions = json.clues.filter((clue) => {
-                return !clue.question == ''
-            })
+          // Some of the questions have no questions (because parsing?)
+          const filtered_questions = json.clues.filter((clue) => {
+              return !clue.question == ''
+          })
 
-            // Sample just 10 random questions
-            this.questions = _.sample(filtered_questions, 10)
+          // Sample just 10 random questions
+          this.questions = _.sample(filtered_questions, 10)
+          console.log(this.questions)
 
-            // Set next question if it's empty
-            if (_.isEmpty(this.current_question)) {
-                this.nextQuestion()
-            }
-        })
+          // Set next question if it's empty
+          if (_.isEmpty(this.current_question)) {
+              this.nextQuestion()
+          }
+      })
     },
     destroyed() {
         if (this.playerSubscription) {

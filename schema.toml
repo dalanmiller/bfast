@@ -1,22 +1,10 @@
-[groups.anonymous.rules.games_read]
-template = "collection('games').anyRead()"
-[groups.anonymous.rules.user_read]
-template = "collection('users').anyRead()"
+# This is a TOML document
 
-# Should only be able to write to games in which you own
-[groups.anonymous.rules.write_games]
-template = "collection('games').anyWrite()"
-validator = """
-  (context, oldValue, newValue) => {
-    return context.id === newValue.user_id && (!old || context.id === old.user_id);
-  }
-"""
-#
-# # Should only be able to write to your own gamer profile
-[groups.anonymous.rules.write_users]
-template = "collection('users').anyWrite()"
-validator = """
-  (context, oldValue, newValue) => {
-    return context.id === newValue.id;
-  }
-"""
+[collections.games]
+
+[collections.players]
+indexes = ["game\\_id"]
+
+[groups.admin]
+[groups.admin.rules.carte_blanche]
+template = "any()"
